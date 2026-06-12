@@ -1,0 +1,67 @@
+# ─── Python ───────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.whl
+
+# ─── Virtual Environments ─────────────────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+.env.local
+.env.*.local
+
+# ─── Environment / Secrets ────────────────────────────────────────────────────
+.env
+# Keep .env.example (it must NOT contain real keys)
+
+# ─── Streamlit ────────────────────────────────────────────────────────────────
+.streamlit/secrets.toml
+.streamlit/credentials.toml
+
+# ─── AI / ML artifacts ────────────────────────────────────────────────────────
+vector_store/
+uploads/
+chat_history/
+*.faiss
+*.pkl
+
+# ─── Jupyter ──────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb
+
+# ─── macOS ────────────────────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# ─── IDEs ─────────────────────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ─── Logs & temp ──────────────────────────────────────────────────────────────
+*.log
+*.tmp
+*.bak
+.cache/
+
+# ─── Test / coverage ──────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
