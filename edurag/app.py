@@ -26,6 +26,36 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+st.markdown("""
+<style>
+/* Always show the sidebar toggle arrow */
+[data-testid="collapsedControl"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: fixed !important;
+    top: 50% !important;
+    left: 0px !important;
+    z-index: 999999 !important;
+    background: #1e3a5f !important;
+    border-radius: 0 8px 8px 0 !important;
+    padding: 12px 6px !important;
+    cursor: pointer !important;
+}
+
+/* Keep it visible even when sidebar is open */
+[data-testid="stSidebarCollapseButton"] {
+    display: block !important;
+    visibility: visible !important;
+}
+
+section[data-testid="stSidebar"][aria-expanded="false"] ~ 
+[data-testid="collapsedControl"] {
+    display: block !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # ── CSS ───────────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
@@ -728,6 +758,9 @@ with st.sidebar:
         st.session_state.messages = []
         st.session_state.questions_asked = 0
         st.rerun()
+
+    st.markdown("---")
+    st.caption("💡 Use the arrow on the left edge to reopen the sidebar if closed.")
 
 
 # ── MAIN AREA ────────────────────────────────────────────────────────────────
