@@ -548,8 +548,10 @@ def render_message(msg):
     if role == "user":
         st.markdown(f"""
         <div class="msg-row user">
-            <div class="bubble user">{content}</div>
             <div class="avatar user">You</div>
+            <div style="display: flex; flex-direction: column; align-items: flex-end; max-width: 78%;">
+                <div class="bubble user">{content}</div>
+            </div>
         </div>
         """, unsafe_allow_html=True)
     else:
@@ -833,6 +835,7 @@ with col_main:
 
         st.text_area(
             "Message",
+            value=st.session_state.get("user_input", ""),
             placeholder="Ask anything… or upload a PDF to get started",
             label_visibility="collapsed",
             key="user_input",
