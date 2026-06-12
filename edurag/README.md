@@ -4,14 +4,16 @@ A production-quality AI Study Companion built with RAG, Voice AI, Memory, and Le
 
 ## Features
 
-- **Conversational Chat** — ChatGPT-style interface with smooth animations, typing indicators, and natural tone
-- **Smart Mode Detection** — Automatically detects chat vs. document Q&A vs. learning tool requests
-- **RAG Pipeline** — PDF upload → text extraction → chunking → embeddings → FAISS → semantic retrieval → LLM
-- **Source Tracking** — Every document answer cites the document name and page number
-- **Learning Tools** — Summarizer, MCQ Generator, Viva Question Generator, Concept Explainer, Flashcard Generator
-- **Voice AI** — Speech-to-text (Whisper Large V3 via Groq) and text-to-speech (Groq TTS)
-- **Session Memory** — Remembers context throughout the conversation
-- **Premium Dark UI** — Glassmorphism, deep navy theme, blue/purple accents, smooth animations
+- **Conversational Chat** — ChatGPT-style interface with smooth animations, typing indicators, and natural tone.
+- **Intuitive Chat Input** — Send messages instantly by pressing `Enter` key. Use `Shift+Enter` to insert a new line. The text area automatically clears upon sending.
+- **Stable Sidebar Toggle** — A persistent floating toggle button that is always visible on screen regardless of sidebar state, with clear helper guidance at the bottom of the sidebar.
+- **Smart Mode Detection** — Automatically detects chat vs. document Q&A vs. learning tool requests.
+- **RAG Pipeline** — PDF upload → text extraction → chunking → embeddings → FAISS → semantic retrieval → LLM.
+- **Source Tracking** — Every document answer cites the document name and page number.
+- **Learning Tools** — Summarizer, MCQ Generator, Viva Question Generator, Concept Explainer, Flashcard Generator.
+- **Voice AI** — Speech-to-text (Whisper Large V3 via Groq) and text-to-speech (Groq TTS).
+- **Session Memory** — Remembers context throughout the conversation.
+- **Premium Dark UI** — Glassmorphism, deep navy theme, blue/purple accents, smooth animations.
 
 ## Setup
 
@@ -65,10 +67,11 @@ vector_store/            # Persisted FAISS index + metadata
 
 ## Usage
 
-1. Upload one or more PDFs from the sidebar
-2. Ask questions naturally — the system detects if you want general chat, a document answer, or a learning tool
-3. Use Quick Tools in the sidebar for one-click summaries, MCQs, viva questions, and flashcards
-4. Enable voice responses to hear answers spoken aloud
+1. Upload one or more PDFs from the sidebar.
+2. Ask questions naturally — the system detects if you want general chat, a document answer, or a learning tool.
+3. Use Quick Tools in the sidebar for one-click summaries, MCQs, viva questions, and flashcards.
+4. Enable voice responses to hear answers spoken aloud.
+5. Control the sidebar via the persistent toggle button on the left edge. Use `Enter` to submit text or `Shift+Enter` for a new line.
 
 ## Notes on Voice
 
@@ -77,6 +80,6 @@ vector_store/            # Persisted FAISS index + metadata
 
 ## Model Notes
 
-- Primary LLM falls back automatically to Llama 3.3 70B if the primary model is unavailable
-- Embeddings run locally via `sentence-transformers` (no API cost)
-- FAISS index persists to disk so documents stay indexed across restarts
+- Primary LLM falls back automatically to Llama 3.3 70B if the primary model is unavailable.
+- Embeddings run locally via `sentence-transformers` (no API cost).
+- FAISS index persists to disk so documents stay indexed across restarts.
