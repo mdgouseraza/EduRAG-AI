@@ -517,6 +517,7 @@ def init_state():
         "voice_enabled": False,
         "active_tab": "chat",
         "pending_audio": None,
+        "user_input": "",
     }
     for k, v in defaults.items():
         if k not in st.session_state:
@@ -826,24 +827,49 @@ with col_main:
 
     with input_col1:
         # Handle quick prompt from sidebar
-        default_val = ""
         if hasattr(st.session_state, "_quick_prompt"):
-            default_val = st.session_state._quick_prompt
+            st.session_state["user_input"] = st.session_state._quick_prompt
             del st.session_state._quick_prompt
 
-        user_input = st.text_input(
+        st.text_area(
             "Message",
-            value=default_val,
             placeholder="Ask anything… or upload a PDF to get started",
             label_visibility="collapsed",
-            key="chat_input"
+            key="user_input",
+            height=68
         )
 
     with input_col2:
-        send_btn = st.button("Send ➤", use_container_width=True)
+        send_btn = st.button("Send ➤", use_container_width=True, type="primary")
 
     with input_col3:
         mic_btn = st.button("🎙️ Speak", use_container_width=True)
+
+    # Inject JavaScript to submit on Enter key press without Shift key
+    st.markdown("""
+    <script>
+    const setupEnterKey = () => {
+        const textarea = window.parent.document.querySelector('textarea');
+        if (textarea) {
+            if (!textarea.dataset.enterListenerAdded) {
+                textarea.dataset.enterListenerAdded = "true";
+                textarea.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        const sendBtn = window.parent.document.querySelector(
+                            'button[kind="primary"]'
+                        );
+                        if (sendBtn) sendBtn.click();
+                    }
+                });
+            }
+        } else {
+            setTimeout(setupEnterKey, 100);
+        }
+    };
+    setupEnterKey();
+    </script>
+    """, unsafe_allow_html=True)
 
     # ── Voice Input ──
     if mic_btn:
@@ -855,19 +881,20 @@ with col_main:
                 transcript = transcribe_audio(audio_upload.read(), audio_upload.name)
             if transcript:
                 st.markdown(f'<div class="edu-alert success">🎤 Heard: "{transcript}"</div>', unsafe_allow_html=True)
-                user_input = transcript
+                st.session_state["user_input"] = transcript
                 send_btn = True
             else:
                 st.markdown('<div class="edu-alert error">Could not transcribe audio. Check your API key.</div>', unsafe_allow_html=True)
 
     # ── Process message ──
-    if (send_btn or (user_input and st.session_state.get("_last_input") != user_input)) and user_input.strip():
-        st.session_state._last_input = user_input
-        prompt = user_input.strip()
-
+    prompt = st.session_state.get("user_input", "").strip()
+    if send_btn and prompt:
         # Add user message
         st.session_state.messages.append({"role": "user", "content": prompt})
         st.session_state.questions_asked += 1
+
+        # Clear state immediately
+        st.session_state["user_input"] = ""
 
         # Show typing indicator
         with st.spinner(""):
