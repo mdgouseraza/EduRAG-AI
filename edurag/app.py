@@ -847,28 +847,20 @@ with col_main:
 
     # Inject JavaScript to submit on Enter key press without Shift key
     st.markdown("""
-    <script>
-    const setupEnterKey = () => {
-        const textarea = window.parent.document.querySelector('textarea');
-        if (textarea) {
-            if (!textarea.dataset.enterListenerAdded) {
-                textarea.dataset.enterListenerAdded = "true";
-                textarea.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                        e.preventDefault();
-                        const sendBtn = window.parent.document.querySelector(
-                            'button[kind="primary"]'
-                        );
-                        if (sendBtn) sendBtn.click();
-                    }
-                });
-            }
-        } else {
-            setTimeout(setupEnterKey, 100);
+<script>
+const textarea = window.parent.document.querySelector('textarea');
+if (textarea) {
+    textarea.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            const sendBtn = window.parent.document.querySelector(
+                'button[kind="primary"]'
+            );
+            if (sendBtn) sendBtn.click();
         }
-    };
-    setupEnterKey();
-    </script>
+    });
+}
+</script>
     """, unsafe_allow_html=True)
 
     # ── Voice Input ──
@@ -892,9 +884,6 @@ with col_main:
         # Add user message
         st.session_state.messages.append({"role": "user", "content": prompt})
         st.session_state.questions_asked += 1
-
-        # Clear state immediately
-        st.session_state["user_input"] = ""
 
         # Show typing indicator
         with st.spinner(""):
@@ -927,6 +916,7 @@ with col_main:
             if audio_bytes:
                 st.audio(audio_bytes, format="audio/mp3", autoplay=True)
 
+        st.session_state["user_input"] = ""
         st.rerun()
 
     # ── Bottom info ──
